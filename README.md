@@ -1,4 +1,4 @@
-# code-and-circuit
+# Rocket Insights <> Code and Circuit Hack Night
 Alexa hack night with the code and circuit folks.
 
 ## Overview
