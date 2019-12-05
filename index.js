@@ -9,7 +9,7 @@ const movies = [
     },
     {
         name: 'blades of glory',
-        url: 'https://rocket-code-and-circuit.s3.amazonaws.com/oldschool.mp3'
+        url: 'https://rocket-code-and-circuit.s3.amazonaws.com/blade_of_glory.mp3'
     },
     {
         name: 'old school',
@@ -17,7 +17,7 @@ const movies = [
     }
 ]
 
-app.launch(function(req,res) {
+app.launch((req,res) => {
     const clips = _.shuffle(movies)
     const clip = clips.pop()
     const session = req.getSession()
@@ -30,7 +30,7 @@ app.launch(function(req,res) {
         .send()
 });
 
-app.intent('GuessIntent', function(req, res) {
+app.intent('GuessIntent', (req, res) => {
     const guess = req.slot('movie')
     const session = req.getSession()
     const answer = session.get('name')
@@ -40,7 +40,7 @@ app.intent('GuessIntent', function(req, res) {
 
     console.log(`The user guessed ${guess} and the answer was ${answer}`)
 
-    let msg = (guess.toLowerCase() === answer.toLowerCase()) ? 'Hot damn, you are correct!' : 'Nope.'
+    let msg = (guess.toLowerCase() === answer.toLowerCase()) ? '<audio src="https://song-game.s3.amazonaws.com/correct.mp3" />' : '<audio src="https://song-game.s3.amazonaws.com/buzzer.mp3" />'
     if (clip) {
         msg = `${msg} Your next movie is. <audio src="${clip.url}" /> What is the movie?`
         session.set('name', clip.name)
@@ -57,11 +57,11 @@ app.intent('GuessIntent', function(req, res) {
         .send()
 })
 
-app.sessionEnded(function(req, res) {
+app.sessionEnded((req, res) => {
     res.say('time is up. good bye.').send();
 })
 
-app.error = function(exception, req, res) {
+app.error = (exception, req, res) => {
     console.log(exception)
     res.say('Oh no, something went wrong.').send()
 }
