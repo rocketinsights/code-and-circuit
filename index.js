@@ -31,7 +31,7 @@ app.intent('GuessIntent', function(req, res) {
   const guess = req.slot('movie')
   console.log(`The user guessed ${guess} and the answer was ${answer}`)
   var correct;
-  if(guess == answer){
+  if(guess.toLowerCase() === answer.toLowerCase()){
       correct = "Correct";
   }else{
       correct = "Incorrect";
